@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+{% include "head.html.j2" %}
+{% include "style.html.j2" %}
+<body>
+{% include "header.html.j2" %}
+  <article>
+    <h2>{{ article_content }}</h2>
+    <h3>{{ article_created }} {% if article_edited %}(<i>Edited: {{ article_edited }}</i>){% endif %}
+    {{ article_content }}
+  </article>
+{% include "footer.html.j2" %}
+</body>
+</html>

@@ -5,10 +5,19 @@
 <body>
 {% include "header.html.j2" %}
   <main>
-    <p class="center">Systems
-      Development
-      Data</p>
-    <p class="center">Platforms</p>
+    <section>
+      <p class="center">Systems
+        Development
+        Data</p>
+      <p class="center">Platforms</p>
+    </section>
+    <nav>
+      <ul>
+        {% for article in recent_articles %}
+        <li><a href="{{ article.article_slug }}.html">{{ article.article_title }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
   </main>
 {% include "footer.html.j2" %}
 </body>
