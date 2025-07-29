@@ -1,0 +1,10 @@
+[project]
+name = "builder"
+version = "0.1.0"
+description = "Minimilist static site builder"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "jinja2==3.1.6",
+    "markdown>=3.8.2",
+]
