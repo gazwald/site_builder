@@ -18,6 +18,11 @@ class SiteConfig(TypedDict):
     include_articles: bool
 
 
+class DeploymentConfig(TypedDict):
+    bucket: str
+    upload_concurrency: int
+
+
 @dataclass
 class Article:
     path: Path
