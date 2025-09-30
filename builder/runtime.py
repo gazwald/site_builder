@@ -43,7 +43,7 @@ class SiteBuilder:
         return [article.for_index for article in sorted(articles, key=lambda a: a.created)][:3]
 
     def build(self):
-        print("Building...")
+        print("Building...", end=" ")
         if not self.config.html_path.is_dir():
             self.config.html_path.mkdir(parents=True)
 
@@ -52,6 +52,8 @@ class SiteBuilder:
         self._write(index, "index.html")
         for article in articles:
             self._write_article(article)
+
+        print("done.")
 
     def _write_article(self, article: Article) -> None:
         self._write(article.content, f"{article.slug}.html")

@@ -36,17 +36,27 @@ class ChangeDetect:
             if self.change_set:
                 for changed_file in self.change_set:
                     print(f"Detected change in {changed_file}")
-                self.callback()
+                self._handle_callback()
 
             sleep(1)
+
+    def _handle_callback(self) -> None:
+        try:
+            self.callback()
+        except Exception as e:
+            print("Caught exception during callback:", end=" ")
+            print(e)
 
     def _find(self) -> None:
         self.change_set = set()
         for path in self.config.jinja_searchpath:
-            for file in path.rglob(self.pattern):
-                last: float | None = self.files.get(file)
-                current: float = file.stat().st_mtime
-                if last and current != last:
-                    self.change_set.add(file)
+            for filepath in path.rglob(self.pattern):
+                self._detect(filepath)
 
-                self.files[file] = current
+    def _detect(self, filepath: Path) -> None:
+        last: float | None = self.files.get(filepath)
+        current: float = filepath.stat().st_mtime
+        if last and current != last:
+            self.change_set.add(filepath)
+
+        self.files[filepath] = current
