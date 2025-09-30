@@ -2,16 +2,20 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, TypedDict
 
 import markdown
 
-from builder.constants import ARTICLE_PATH, HTML_PATH, TEMPLATE_PATH
+from builder.constants import ARTICLE_PATH, HTML_PATH, MACRO_PATH, TEMPLATE_PATH
 
 if TYPE_CHECKING:
     from pathlib import Path
 
-    from builder.types import SiteConfig
+
+class SiteConfig(TypedDict):
+    title: str
+    copyright_year: str
+    include_articles: bool
 
 
 @dataclass
@@ -63,12 +67,23 @@ class Config:
     title: str = "Gazwald"
     copyright_year: str = "2025"
     template_path: Path = TEMPLATE_PATH
+    macro_path: Path = MACRO_PATH
     html_path: Path = HTML_PATH
     article_path: Path = ARTICLE_PATH
+    include_articles: bool = False
+    watch: bool = True
 
     @property
     def site_config(self) -> SiteConfig:
         return {
             "title": self.title,
             "copyright_year": self.copyright_year,
+            "include_articles": self.include_articles,
         }
+
+    @property
+    def jinja_searchpath(self) -> list[Path]:
+        return [
+            self.template_path,
+            self.macro_path,
+        ]

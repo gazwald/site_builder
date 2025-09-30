@@ -4,24 +4,22 @@ from typing import TYPE_CHECKING
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from builder.constants import TEMPLATE_PATH
+from builder.models import Config
 
 if TYPE_CHECKING:
-    from pathlib import Path
-
     from jinja2.environment import Template
 
 
 class Templater:
-    templates_dir: Path
+    config: Config
 
-    def __init__(self, templates_dir: Path = TEMPLATE_PATH) -> None:
-        self.templates_dir = templates_dir
+    def __init__(self, config: Config) -> None:
+        self.config = config
         self.env = self._create_env()
 
     def _create_env(self) -> Environment:
         return Environment(
-            loader=FileSystemLoader(self.templates_dir),
+            loader=FileSystemLoader(self.config.jinja_searchpath),
             autoescape=select_autoescape(),
         )
 

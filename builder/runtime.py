@@ -14,7 +14,7 @@ class SiteBuilder:
     templater: Templater
 
     def __init__(self, config: Config) -> None:
-        self.templater = Templater(config.template_path)
+        self.templater = Templater(config)
         self.config = config
 
     def _index(self, recent_articles: list[dict[str, str]]) -> str:
@@ -43,6 +43,7 @@ class SiteBuilder:
         return [article.for_index for article in sorted(articles, key=lambda a: a.created)][:3]
 
     def build(self):
+        print("Building...")
         if not self.config.html_path.is_dir():
             self.config.html_path.mkdir(parents=True)
 
