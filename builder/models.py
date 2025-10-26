@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, TypedDict
 
 import markdown
 
-from builder.constants import ARTICLE_PATH, HTML_PATH, MACRO_PATH, TEMPLATE_PATH
+from builder.constants import ARTICLE_PATH, ASSET_PATH, HTML_PATH, MACRO_PATH, TEMPLATE_PATH
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -75,6 +75,7 @@ class Config:
     macro_path: Path = MACRO_PATH
     html_path: Path = HTML_PATH
     article_path: Path = ARTICLE_PATH
+    asset_path: Path = ASSET_PATH
     include_articles: bool = False
     watch: bool = True
 
@@ -91,4 +92,12 @@ class Config:
         return [
             self.template_path,
             self.macro_path,
+        ]
+
+    @property
+    def change_searchpath(self) -> list[Path]:
+        return [
+            self.template_path,
+            self.macro_path,
+            self.asset_path,
         ]
