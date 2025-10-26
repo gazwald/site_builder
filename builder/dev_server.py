@@ -4,7 +4,6 @@ Ripped from '__main__' in http.server
 
 import sys
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
-from threading import Thread
 
 from builder.constants import HTML_PATH
 
@@ -34,8 +33,3 @@ def run_httpd(
         except KeyboardInterrupt:
             print("\nKeyboard interrupt received, exiting.")
             sys.exit(0)
-
-
-def blah():
-    thread = Thread(target=run_httpd, daemon=True)
-    thread.start()
